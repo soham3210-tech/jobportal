@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import axios from 'axios';
+import API from 'axios';
 
 const ResumeBuilder = () => {
     const [file, setFile] = useState(null);
@@ -23,7 +23,7 @@ const ResumeBuilder = () => {
 
         setIsAnalyzing(true);
         try {
-            const res = await axios.post('/api/analyze-resume', formData, {
+            const res = await API.post('/api/analyze-resume', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

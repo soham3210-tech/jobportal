@@ -118,7 +118,7 @@ const Navbar = () => {
               <span className="
               text-3xl font-extrabold text-gray-900
               ">
-                Wave
+                Ocean
               </span>
 
             </motion.div>

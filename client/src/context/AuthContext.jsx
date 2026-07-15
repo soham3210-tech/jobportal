@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import API from 'axios';
 
 const AuthContext = createContext(null);
 
@@ -7,8 +7,8 @@ const decodeToken = (token) => {
   try {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
     return JSON.parse(jsonPayload);
   } catch (e) {
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const decoded = decodeToken(token);
       const isEmployer = decoded?.user?.type === 'employer';
-      
+
       const config = {
         headers: {
           'x-auth-token': token
@@ -41,8 +41,8 @@ export const AuthProvider = ({ children }) => {
       };
 
       const endpoint = isEmployer ? '/api/employers/profile' : '/api/users/profile';
-      const res = await axios.get(endpoint, config);
-      
+      const res = await API.get(endpoint, config);
+
       setUser({
         ...res.data,
         role: isEmployer ? 'employer' : 'candidate'
@@ -67,11 +67,11 @@ export const AuthProvider = ({ children }) => {
     try {
       let res;
       try {
-        res = await axios.post('/api/users/login', { email, password });
+        res = await API.post('/api/users/login', { email, password });
       } catch (err) {
         // If candidate login fails with invalid credentials, try employer login
         if (err.response?.status === 400 && (err.response?.data?.msg === 'Invalid credentials' || err.response?.data?.error === 'Invalid credentials')) {
-          res = await axios.post('/api/employers/login', { email, password });
+          res = await API.post('/api/employers/login', { email, password });
         } else {
           throw err;
         }
@@ -95,8 +95,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const isEmployer = !!userData.companyName;
       const endpoint = isEmployer ? '/api/employers/register' : '/api/users/register';
-      const res = await axios.post(endpoint, userData);
-      
+      const res = await API.post(endpoint, userData);
+
       const { token } = res.data;
       localStorage.setItem('token', token);
       await loadUser(token);

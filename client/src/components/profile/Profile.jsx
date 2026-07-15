@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import API from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
 
@@ -49,7 +49,7 @@ const Profile = () => {
           'x-auth-token': token
         }
       };
-      const res = await axios.put('/api/users/profile', profileData, config);
+      const res = await API.put('/api/users/profile', profileData, config);
       return res.data;
     },
     onSuccess: () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '../../api';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { toast } from 'react-hot-toast';
 
@@ -55,7 +55,7 @@ const Dashboard = () => {
             };
 
             // 1. Fetch applications from database
-            const res = await axios.get('/api/jobs/applications/mine', config);
+            const res = await API.get('/api/jobs/applications/mine', config);
             setApplications(res.data);
 
             // 2. Fetch saved jobs from localStorage
@@ -74,7 +74,7 @@ const Dashboard = () => {
         try {
             const token = localStorage.getItem('token');
             // Fetch jobs posted by this employer
-            const res = await axios.get(`/api/jobs?company=${user._id || user.id}`);
+            const res = await API.get(`/api/jobs?company=${user._id || user.id}`);
             setEmployerJobs(res.data.jobs || []);
         } catch (error) {
             console.error('Error loading employer jobs:', error);
@@ -91,7 +91,7 @@ const Dashboard = () => {
             const config = {
                 headers: { 'x-auth-token': token }
             };
-            const res = await axios.get(`/api/jobs/${jobId}/applicants`, config);
+            const res = await API.get(`/api/jobs/${jobId}/applicants`, config);
             setApplicants(res.data);
         } catch (error) {
             console.error('Error fetching applicants:', error);
@@ -124,7 +124,7 @@ const Dashboard = () => {
                 }
             };
 
-            await axios.put(`/api/jobs/applications/${applicationId}/status`, { status: newStatus }, config);
+            await API.put(`/api/jobs/applications/${applicationId}/status`, { status: newStatus }, config);
             toast.success('Applicant status updated successfully!');
             
             // Refresh applicant list

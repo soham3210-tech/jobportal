@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import API from 'axios';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 const JobList = () => {
@@ -33,7 +33,7 @@ const JobList = () => {
                 params.remoteWork = 'true';
             }
 
-            const res = await axios.get('/api/jobs', { params });
+            const res = await API.get('/api/jobs', { params });
             const responseData = res.data;
             
             // Safely handle both array responses and object responses { jobs: [], totalPages: 1 }

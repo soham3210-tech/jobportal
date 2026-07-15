@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import API from 'axios';
 import { toast } from 'react-hot-toast';
 
 const CreateJob = () => {
@@ -39,7 +39,7 @@ const CreateJob = () => {
           'x-auth-token': token
         }
       };
-      const res = await axios.post('/api/jobs', jobData, config);
+      const res = await API.post('/api/jobs', jobData, config);
       return res.data;
     },
     onSuccess: () => {
@@ -148,7 +148,7 @@ const CreateJob = () => {
           <h2 className="text-xl font-semibold mb-4" tabIndex="0">
             Basic Information
           </h2>
-          
+
           <div className="space-y-4">
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-gray-700">
@@ -225,7 +225,7 @@ const CreateJob = () => {
           <h2 className="text-xl font-semibold mb-4" tabIndex="0">
             Salary Information
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label htmlFor="salary.min" className="block text-sm font-medium text-gray-700">
@@ -282,7 +282,7 @@ const CreateJob = () => {
           <h2 className="text-xl font-semibold mb-4" tabIndex="0">
             Requirements
           </h2>
-          
+
           <div className="space-y-4">
             {formData.requirements.map((requirement, index) => (
               <div key={index} className="flex gap-2">
@@ -320,7 +320,7 @@ const CreateJob = () => {
           <h2 className="text-xl font-semibold mb-4" tabIndex="0">
             Required Skills
           </h2>
-          
+
           <div className="space-y-4">
             {formData.skills.map((skill, index) => (
               <div key={index} className="flex gap-2">
@@ -358,7 +358,7 @@ const CreateJob = () => {
           <h2 className="text-xl font-semibold mb-4" tabIndex="0">
             Accessibility Features
           </h2>
-          
+
           <div className="space-y-4">
             <div className="flex items-center">
               <input

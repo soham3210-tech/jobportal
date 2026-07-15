@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Notification from '../common/Notification';
@@ -35,7 +35,7 @@ const JobDetail = () => {
         setIsLoading(true);
         try {
             // Fetch job from Mongoose backend API
-            const res = await axios.get(`/api/jobs/${id}`);
+            const res = await API.get(`/api/jobs/${id}`);
             const fetchedJob = res.data;
 
             // Check if job is saved in localStorage
@@ -75,7 +75,7 @@ const JobDetail = () => {
                 }
             };
 
-            await axios.post(`/api/jobs/${id}/apply`, {}, config);
+            await API.post(`/api/jobs/${id}/apply`, {}, config);
 
             toast.success(`Successfully applied to ${job.title}!`);
             navigate('/dashboard');

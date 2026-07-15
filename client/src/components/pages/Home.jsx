@@ -248,7 +248,7 @@ const Home = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+        <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
             {/* Hero Section */}
             <motion.section
                 className="relative py-20 overflow-hidden"
@@ -265,7 +265,7 @@ const Home = () => {
                             transition={{ duration: 0.6 }}
                         >
                             Empowering Careers,
-                            <span className="text-purple-600"> Embracing Abilities</span>
+                            <span className="text-bold-600"> Embracing Abilities</span>
                         </motion.h1>
                         <motion.p
                             className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto"
